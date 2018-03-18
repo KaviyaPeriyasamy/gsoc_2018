@@ -1,0 +1,44 @@
+Google Summer of Code 2018 Coding exercise
+==========================================
+
+
+Goal:
+Implement functions in sort_impl.c so that sort binary can be
+built and run. The aim of the binary is to read text from input
+and to print it out sorted on standard output.
+
+Typical usage of sort APIs is the following:
+
+  Sort *s = sort_init();
+
+  while (getline(&line, &lineLen) > 0)
+      sort_append_line(s, line, lineLen);
+
+  sort_sort(s, false);
+
+  sort_print(s, stdout);
+
+  sort_free(s);
+
+(of course, with error checking at appropriate places.)
+
+
+Steps:
+The design of _Sort structure is entirely up to you. Just keep in
+mind that thread safety is one of the goals, i.e. users of this
+API should be able to use two different sort objects from two
+distant threads.
+
+The implementation of the API functions is again entirely up to
+you. You can introduce internal static functions should you need
+them, you can also call functions from standard C library. If you
+allocate any memory, don't forget to free it when no longer
+needed.
+
+The aim is not to exercise your knowledge of string ordering
+algorithms. Your algorithm can be simple and built on the top of
+strcoll() function. Having said that, your program is likely to
+throw different results than 'sort' found in coreutils package in
+some corner cases. It's okay and not considered as error.
+
+Feel free to ask any questions.

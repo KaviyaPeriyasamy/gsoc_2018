@@ -14,13 +14,21 @@ Typical usage of sort APIs is the following:
   while (getline(&line, &lineLen) > 0)
       sort_append_line(s, line, lineLen);
 
-  sort_sort(s, false);
+  sort_sort(s, sort_function, false);
 
   sort_print(s, stdout);
 
   sort_free(s);
 
-(of course, with error checking at appropriate places.)
+(of course, with error checking at appropriate places.) Where
+sort_function looks like this:
+
+  static int
+  sort_function(const char *s1,
+                const char *s2)
+  {
+      return strcoll(s1, s2);
+  }
 
 
 Steps:

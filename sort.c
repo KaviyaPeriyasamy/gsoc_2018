@@ -63,6 +63,14 @@ openFile(const char *filename)
 }
 
 
+static int
+sort_function(const char *s1,
+              const char *s2)
+{
+    return strcoll(s1, s2);
+}
+
+
 int main(int argc, char *argv[])
 {
     int ret = EXIT_FAILURE;
@@ -126,7 +134,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    sort_sort(s, reverse);
+    sort_sort(s, sort_function, reverse);
 
     sort_print(s, stdout);
 

@@ -158,14 +158,16 @@ sort_print(Sort *s,
 /**
  * sort_sort:
  * @s: sort object
+ * @cb: sort callback
  * @reverse: if true, do reverse sorting
  *
- * Sorts lines contained in @s using strcoll() comparison
+ * Sorts lines contained in @s using @cb for comparison
  * alphabetically (ascending, a-z). However, if @reverse is true,
  * the order is reversed and thus descending, z-a).
  */
 void
 sort_sort(Sort *s,
+          sortCB cb,
           bool reverse)
 {
     if (!s || !s->l || !s->l->next)
@@ -176,7 +178,7 @@ sort_sort(Sort *s,
         bool xchg = false;
 
         while (l && l->next) {
-            int cmp = strcoll(l->line, l->next->line);
+            int cmp = cb(l->line, l->next->line);
 
             if ((!reverse && cmp > 0) ||
                 (reverse && cmp < 0)) {

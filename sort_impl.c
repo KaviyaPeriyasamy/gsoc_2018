@@ -9,28 +9,6 @@
 
 #include "sort_impl.h"
 
-typedef struct _Line Line;
-struct _Line {
-    char *line;
-    Line *next;
-};
-
-struct _Sort {
-    Line *l;
-};
-
-
-static void
-line_free(Line *l)
-{
-    if (!l)
-        return;
-
-    free(l->line);
-    free(l);
-}
-
-
 /**
  * sort_init:
  *
@@ -42,14 +20,7 @@ line_free(Line *l)
 Sort *
 sort_init(void)
 {
-    Sort *s;
-
-    if (!(s = malloc(sizeof(*s))))
-        return NULL;
-
-    s->l = NULL;
-
-    return s;
+    /* Implement me. */
 }
 
 
@@ -62,20 +33,7 @@ sort_init(void)
 void
 sort_free(Sort *s)
 {
-    Line *l;
-
-    if (!s)
-        return;
-
-    l = s->l;
-    while (l) {
-        Line *next = l->next;
-
-        line_free(l);
-        l = next;
-    }
-
-    free(s);
+    /* Implement me. */
 }
 
 
@@ -96,37 +54,7 @@ sort_append_line(Sort *s,
                  const char *line,
                  size_t lineLen)
 {
-    Line *l = NULL;
-    int ret = -1;
-
-    if (!s)
-        return -1;
-
-    if (!(l = malloc(sizeof(*l))))
-        return -1;
-    l->next = NULL;
-
-    if (!(l->line = malloc(lineLen * sizeof(char) + 1)))
-        goto cleanup;
-
-    memcpy(l->line, line, lineLen * sizeof(char));
-    l->line[lineLen] = '\0';
-
-    if (s->l) {
-        Line *tmp = s->l;
-        while (tmp && tmp->next)
-            tmp = tmp->next;
-        tmp->next = l;
-    } else {
-        s->l = l;
-    }
-
-    l = NULL;
-
-    ret = 0;
- cleanup:
-    line_free(l);
-    return ret;
+    /* Implement me. */
 }
 
 
@@ -142,16 +70,8 @@ void
 sort_print(Sort *s,
            FILE *fp)
 {
-    Line *l;
 
-    if (!s)
-        return;
-
-    l = s->l;
-    while (l) {
-        fputs(l->line, fp);
-        l = l->next;
-    }
+    /* Implement me. */
 }
 
 
@@ -170,28 +90,5 @@ sort_sort(Sort *s,
           sortCB cb,
           bool reverse)
 {
-    if (!s || !s->l || !s->l->next)
-        return;
-
-    while (1) {
-        Line *l = s->l;
-        bool xchg = false;
-
-        while (l && l->next) {
-            int cmp = cb(l->line, l->next->line);
-
-            if ((!reverse && cmp > 0) ||
-                (reverse && cmp < 0)) {
-                char *tmp = l->line;
-                l->line = l->next->line;
-                l->next->line = tmp;
-                xchg = true;
-            }
-
-            l = l->next;
-        }
-
-        if (!xchg)
-            break;
-    }
+    /* Implement me. */
 }
